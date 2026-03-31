@@ -1,6 +1,6 @@
 # Go Semantic Error Test Suite
 
-This repository contains a set of Go code examples designed to test **semantic and code-quality issues** that are **not always detected by the Go compiler**. The goal is to create a reference showing which constructs are caught by the compiler.
+This repository contains a set of Go code examples designed to test **semantic error detection** by the **compiler**. The goal is to create a reference showing which constructs are caught by the compiler.
 
 ---
 
@@ -8,15 +8,14 @@ This repository contains a set of Go code examples designed to test **semantic a
 
 The following categories are covered:
 
-| Category                          | Description                                                  | Compiler | Notes                                                        |
-| --------------------------------- | ------------------------------------------------------------ | -------- | ------------------------------------------------------------ |
-| **Unused Variables**              | Variables declared but never referenced within their scope   | ❌        | Helps catch dead code and potential logic mistakes           |
-| **Ignored Error Values**          | Function calls that return errors which are neither assigned nor checked | ❌        | Ignoring errors is a common source of bugs in Go programs    |
-| **Variable Shadowing**            | Redeclarations of variables in inner scopes that shadow outer-scope variables, especially error variables | ❌        | Can lead to subtle bugs when outer variable changes are ignored |
-| **Defer Statements Inside Loops** | Use of `defer` inside loops which delays resource release    | ❌        | Can lead to unexpected memory or file descriptor retention   |
-| **Duplicate/Unused Imports**      | Detects imports that are never used or repeated              | ❌        | Keeps imports clean and avoids unnecessary compilation overhead |
-| **Unreachable Code**              | Statements after `return`, `panic`, or similar terminating statements | ❌        | Improves code readability and maintainability                |
-| **Empty Code Blocks**             | Empty blocks in constructs like `if`, `for`, or `switch`     | ❌        | Often indicates incomplete logic or placeholders             |
+| Category                     | Description                                                  | Compiler | Notes                                                     |
+| ---------------------------- | ------------------------------------------------------------ | -------- | --------------------------------------------------------- |
+| **Unused Variables**         | Variables declared but never referenced within their scope   | ✅        | `declared and not used: x`. Also prevents code execution. |
+| **Ignored Error Values**     | Function calls that return errors which are neither assigned nor checked | ❌        | Allows code compilation and execution.                    |
+| **Variable Shadowing**       | Redeclarations of variables in inner scopes that shadow outer-scope variables, especially error variables | ❌        | Allows code compilation and execution.                    |
+| **Duplicate/Unused Imports** | Detects imports that are never used or repeated              | ✅        | Prevents code compilation and execution.                  |
+| **Unreachable Code**         | Statements after `return`, `panic`, or similar terminating statements | ❌        | Allows code compilation and execution.                    |
+| **Empty Code Blocks**        | Empty blocks in constructs like `if`, `for`, or `switch`     | ❌        | Allows code compilation and execution.                    |
 
 > **Legend:**  
 > ❌ = Compiler does not flag  
@@ -27,28 +26,7 @@ The following categories are covered:
 
 ## Repository Structure
 
-/cases/
- /unused-variable/
-   main.go
-   explanation.md
- /ignored-error/
-   main.go
-   explanation.md
- /variable-shadowing/
-   main.go
-   explanation.md
- /defer-in-loop/
-   main.go
-   explanation.md
- /duplicate-imports/
-   main.go
-   explanation.md
- /unreachable-code/
-   main.go
-   explanation.md
- /empty-blocks/
-   main.go
-   explanation.md
+- Each semantic error detection has its own folder.
 
 - Each folder contains a **minimal reproducible example**.
 - `explanation.md` describes:
